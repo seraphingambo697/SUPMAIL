@@ -326,21 +326,8 @@ docker compose up --build
 
 - Frontend : http://localhost:3000
 - API backend : http://localhost:8000/api/
-- Admin Django : http://localhost:8000/admin/ (compte auto-créé si `DJANGO_CREATE_SUPERUSER=True` : `admin` / `admin1234` — **à changer immédiatement en production**)
+- Admin Django : http://localhost:8000/admin/ (compte auto-créé si `DJANGO_CREATE_SUPERUSER=True` : `admin` / `admin1234` 
 
-### Variables d'environnement principales
-
-| Variable | Description |
-|---|---|
-| `DJANGO_SECRET_KEY` | Clé secrète Django (obligatoire en production) |
-| `DJANGO_DEBUG` | `True`/`False` |
-| `POSTGRES_DB/USER/PASSWORD` | Identifiants base de données |
-| `CORS_ALLOWED_ORIGINS` | Origines autorisées à appeler l'API |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Identifiants app OAuth2 Google (créer un projet sur Google Cloud Console, redirect URI : `http://localhost:3000/oauth/callback/google`) |
-| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | Identifiants OAuth App GitHub |
-| `MICROSOFT_CLIENT_ID` / `MICROSOFT_CLIENT_SECRET` | Identifiants app Azure AD |
-
-Le frontend lit également `VITE_GOOGLE_CLIENT_ID`, `VITE_GITHUB_CLIENT_ID`, `VITE_MICROSOFT_CLIENT_ID` (mêmes valeurs de client ID, publiques par nature dans le flow OAuth2 "Authorization Code").
 
 ### Développement sans Docker (optionnel)
 
@@ -360,7 +347,7 @@ npm run dev
 
 ---
 
-## 7. Structure du dépôt
+## Structure du dépôt
 
 ```
 supmeal/
@@ -371,7 +358,7 @@ supmeal/
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   ├── entrypoint.sh
-│   ├── supmeal/          # settings, urls, wsgi/asgi
+│   ├── supmeal/          
 │   ├── accounts/
 │   ├── cookbooks/
 │   ├── recipes/
@@ -380,15 +367,14 @@ supmeal/
 │   └── importexport/
 ├── frontend/
 │   ├── src/
-│   │   ├── api/          # client axios + refresh JWT
-│   │   ├── context/      # AuthContext
-│   │   ├── components/   # Layout, RecipeCard...
-│   │   ├── pages/        # Login, Dashboard, Recipes, Cookbooks...
+│   │   ├── api/          
+│   │   ├── context/     
+│   │   ├── components/   
+│   │   ├── pages/        
 │   │   └── styles.css
 │   ├── package.json
 │   └── Dockerfile
-├── README.md              (ce fichier)
-└── USER_MANUAL.md
+├── README.md             
 ```
 
 ---

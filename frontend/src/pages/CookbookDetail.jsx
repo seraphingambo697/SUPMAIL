@@ -16,6 +16,7 @@ export default function CookbookDetail() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('reader');
   const pollRef = useRef(null);
+  const lastMessageIdRef = useRef(undefined);
 
   const loadCookbook = () => client.get(`/cookbooks/${id}/`).then((r) => setCookbook(r.data));
   const loadRecipes = () => client.get('/recipes/', { params: { cookbook: id } }).then((r) => setRecipes(r.data.results || r.data));
@@ -27,14 +28,31 @@ export default function CookbookDetail() {
 
   useEffect(() => {
     if (tab !== 'chat') return;
+
     const fetchMessages = () => {
-      const after = messages.length ? messages[messages.length - 1].id : undefined;
+      const after = lastMessageIdRef.current;
       client.get('/messages/', { params: { cookbook: id, after } }).then((r) => {
         const newOnes = r.data.results || r.data;
-        if (newOnes.length) setMessages((prev) => [...prev, ...newOnes]);
+        if (newOnes.length) {
+          setMessages((prev) => {
+            // Sécurité anti-doublon : on ignore tout message déjà présent (par id).
+            const existingIds = new Set(prev.map((m) => m.id));
+            const filtered = newOnes.filter((m) => !existingIds.has(m.id));
+            if (filtered.length === 0) return prev;
+            const merged = [...prev, ...filtered];
+            lastMessageIdRef.current = merged[merged.length - 1].id;
+            return merged;
+          });
+        }
       });
     };
-    client.get('/messages/', { params: { cookbook: id } }).then((r) => setMessages(r.data.results || r.data));
+
+    client.get('/messages/', { params: { cookbook: id } }).then((r) => {
+      const initial = r.data.results || r.data;
+      setMessages(initial);
+      lastMessageIdRef.current = initial.length ? initial[initial.length - 1].id : undefined;
+    });
+
     pollRef.current = setInterval(fetchMessages, 3000);
     return () => clearInterval(pollRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +67,11 @@ export default function CookbookDetail() {
     e.preventDefault();
     if (!messageText.trim()) return;
     const { data } = await client.post('/messages/', { cookbook: id, content: messageText });
-    setMessages((prev) => [...prev, data]);
+    setMessages((prev) => {
+      if (prev.some((m) => m.id === data.id)) return prev;
+      return [...prev, data];
+    });
+    lastMessageIdRef.current = data.id;
     setMessageText('');
   };
 
