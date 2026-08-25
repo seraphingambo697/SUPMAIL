@@ -313,7 +313,7 @@ classDiagram
 
 ```bash
 # 1. Cloner le dépôt
-git clone <url-du-depot>
+git clone https://github.com/seraphingambo697/SUPMAIL.git
 cd supmeal
 
 # 2. Configurer l'environnement
@@ -414,10 +414,4 @@ supmeal/
 | GET | `/api/export/?export_format=json\|csv` | Export des données |
 | POST | `/api/import/` | Import de recettes/cookbooks |
 
----
 
-## 9. Pistes d'amélioration (bonus)
-
-- Passage de la messagerie en WebSocket (Django Channels) pour un vrai temps réel plutôt que du polling.
-- Suggestions intelligentes de recettes basées sur les préférences/allergies utilisateur.
-- Déploiement public (ex : Render/Railway pour le backend + Vercel/Netlify pour le frontend, ou VPS avec ce même docker-compose).

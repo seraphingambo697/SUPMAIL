@@ -5,9 +5,7 @@ from cookbooks.models import Cookbook
 
 
 class Ingredient(models.Model):
-    """Table maître des ingrédients : évite la duplication de texte libre et
-    permet une recherche/filtrage optimisé (indexé) au lieu de scanner des
-    chaînes dans chaque recette (2.2.4 + Qualité du code)."""
+    """Table maître des ingrédients """
     name = models.CharField(max_length=150, unique=True)
 
     class Meta:

@@ -135,7 +135,7 @@ CORS_ALLOWED_ORIGINS = os.environ.get(
 ).split(',')
 CORS_ALLOW_ALL_ORIGINS = os.environ.get('CORS_ALLOW_ALL', 'True') == 'True'
 
-# --- OAuth2 (Google / GitHub / Microsoft) : clés fournies via variables d'env ---
+# --- parametre google Auth ---
 OAUTH_PROVIDERS = {
     'google': {
         'client_id': os.environ.get('GOOGLE_CLIENT_ID', ''),

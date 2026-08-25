@@ -4,7 +4,7 @@ from .models import Recipe
 
 
 class RecipeFilter(django_filters.FilterSet):
-    """Filtrage avancé (2.2.4) : cookbook, tags, ingrédients, temps, favoris."""
+    """Filtrage cookbook, tags, ingrédients, temps, favoris."""
 
     cookbook = django_filters.NumberFilter(field_name='cookbook_id')
     mine = django_filters.BooleanFilter(method='filter_mine')

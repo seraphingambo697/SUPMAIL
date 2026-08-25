@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Cookbook(models.Model):
-    """Livre de recettes partagé (2.2.2)."""
+    """Livre de recettes partagé."""
     name = models.CharField(max_length=150)
     description = models.TextField(blank=True)
     owner = models.ForeignKey(
@@ -21,7 +21,7 @@ class Cookbook(models.Model):
 
 
 class CookbookMembership(models.Model):
-    """Appartenance d'un utilisateur à un cookbook, avec permission (2.2.2)."""
+    """Appartenance d'un utilisateur à un cookbook, avec permission """
 
     ROLE_CREATOR = 'creator'
     ROLE_EDITOR = 'editor'
