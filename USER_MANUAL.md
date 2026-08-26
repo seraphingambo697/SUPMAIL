@@ -113,5 +113,3 @@ Menu **Paramètres** :
 - Toutes vos actions (création, modification, suppression) sont soumises aux permissions définies par votre rôle dans chaque cookbook.
 - Les recettes personnelles (non rattachées à un cookbook) ne sont visibles que par vous.
 - Vous pouvez à tout moment quitter SUPMEAL en exportant vos données (section 7).
-
-Bon appétit avec SUPMEAL ! 🍲

@@ -208,7 +208,7 @@ sequenceDiagram
     participant P as Fournisseur OAuth2
     participant S as Backend Django
 
-    U->>F: Clique "Continuer avec Google"
+    U->>F: Clique "Saisie d'identification"
     F->>P: Redirection (authorize?client_id&redirect_uri)
     P-->>U: Écran de consentement
     U->>P: Autorise
