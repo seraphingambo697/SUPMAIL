@@ -9,7 +9,7 @@ Bienvenue sur **SUPMEAL**, votre outil de gestion de recettes et de planificatio
 Deux façons de vous connecter, depuis la page **Connexion** :
 
 1. **Compte classique** : cliquez sur "S'inscrire", renseignez un nom d'utilisateur, un e-mail et un mot de passe.
-2. **Via un fournisseur externe** : cliquez sur "Continuer avec Google / GitHub / Microsoft". Vous êtes redirigé vers le fournisseur, autorisez l'accès, et vous êtes automatiquement connecté (un compte SUPMEAL est créé lors de la première connexion).
+2. **Via un fournisseur externe : cliquez sur "Continuer avec Google / GitHub / Microsoft". Vous êtes redirigé vers le fournisseur, autorisez l'accès, et vous êtes automatiquement connecté (un compte SUPMEAL est créé lors de la première connexion).
 
 ---
 

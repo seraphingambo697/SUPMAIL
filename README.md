@@ -23,7 +23,7 @@ flowchart LR
     API -- Échange tokens --> AUTH
 ```
 
-Conformément au sujet (2.3.1) :
+Conformément au sujet :
 - **Aucune logique métier côté client** : React ne fait qu'appeler l'API REST et afficher/poster des données. Toutes les règles (permissions, calcul de liste de courses, agrégation, filtrage) sont exécutées côté serveur.
 - Le serveur expose une **API REST** (Django REST Framework) versionnée sous `/api/`.
 - La base de données est **PostgreSQL** en production/Docker (bascule automatique sur SQLite en développement local sans variables d'environnement postgres, pour faciliter les tests rapides).
@@ -184,19 +184,39 @@ erDiagram
 ### 4.1 Diagramme de cas d'utilisation (synthèse)
 
 ```mermaid
-flowchart TB
-    U((Utilisateur))
-    U --> UC1[S'inscrire / se connecter (local ou OAuth2)]
-    U --> UC2[Créer / gérer une recette]
-    U --> UC3[Créer un cookbook et inviter des membres]
-    U --> UC4[Filtrer / rechercher des recettes]
-    U --> UC5[Planifier des repas]
-    U --> UC6[Générer une liste de courses]
-    U --> UC7[Commenter une recette]
-    U --> UC8[Discuter dans la messagerie du cookbook]
-    U --> UC9[Exporter ses données]
-    U --> UC10[Importer des recettes]
-    U --> UC11[Gérer ses préférences]
+flowchart LR
+    U(["Utilisateur"])
+
+    subgraph SYS["Système SUPMEAL"]
+        UC1(["S'inscrire / se connecter"])
+        UC1b(["Se connecter via OAuth2"])
+        UC2(["Créer / gérer une recette"])
+        UC3(["Créer un cookbook"])
+        UC3b(["Inviter des membres"])
+        UC4(["Filtrer / rechercher des recettes"])
+        UC5(["Planifier des repas"])
+        UC6(["Générer une liste de courses"])
+        UC7(["Commenter une recette"])
+        UC8(["Discuter dans la messagerie du cookbook"])
+        UC9(["Exporter ses données"])
+        UC10(["Importer des recettes"])
+        UC11(["Gérer ses préférences"])
+    end
+
+    U --- UC1
+    U --- UC2
+    U --- UC3
+    U --- UC4
+    U --- UC5
+    U --- UC7
+    U --- UC8
+    U --- UC9
+    U --- UC10
+    U --- UC11
+
+    UC1b -.->|"«extend»"| UC1
+    UC3b -.->|"«include»"| UC3
+    UC6 -.->|"«include»"| UC5
 ```
 
 ### 4.2 Diagramme de séquence — Authentification OAuth2
