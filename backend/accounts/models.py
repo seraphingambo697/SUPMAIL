@@ -3,9 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    """Utilisateur SUPMEAL. Étend AbstractUser pour garder le hashing de mot
-    de passe et les mécanismes d'auth standards de Django (jamais de mot de
-    passe en clair)."""
+    """Utilisateur SUPMEAL. Étend AbstractUser """
 
     DIET_CHOICES = [
         ('none', 'Aucun'),

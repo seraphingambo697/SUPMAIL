@@ -10,9 +10,6 @@ from .serializers import MessageSerializer
 
 class MessageViewSet(viewsets.ModelViewSet):
     """Messagerie instantanée interne à un cookbook (2.2.8).
-
-    Le frontend "poll" périodiquement GET /api/messages/?cookbook=<id>&after=<id>
-    pour simuler le temps réel sans dépendance supplémentaire (websocket/redis).
     """
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticated]
