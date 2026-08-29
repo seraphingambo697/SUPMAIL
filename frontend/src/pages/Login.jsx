@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
+// OAuth Non fonctionnel pour le moment, mais le code est prêt à être utilisé si nécessaire.
 const OAUTH_CONFIG = {
   google: {
     authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
