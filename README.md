@@ -22,12 +22,6 @@ flowchart LR
     API -- ORM --> DB
     API -- Échange tokens --> AUTH
 ```
-
-Conformément au sujet :
-- **Aucune logique métier côté client** : React ne fait qu'appeler l'API REST et afficher/poster des données. Toutes les règles (permissions, calcul de liste de courses, agrégation, filtrage) sont exécutées côté serveur.
-- Le serveur expose une **API REST** (Django REST Framework) versionnée sous `/api/`.
-- La base de données est **PostgreSQL** en production/Docker (bascule automatique sur SQLite en développement local sans variables d'environnement postgres, pour faciliter les tests rapides).
-
 ### 1.1 - Découpage en applications Django (modularité)
 
 | App | Responsabilité |
@@ -58,9 +52,6 @@ Conformément au sujet :
 
 ### Base de données — PostgreSQL
 - SGBD relationnel robuste, gère bien les contraintes d'unicité (ex : un utilisateur ne peut avoir qu'un seul rôle par cookbook), les index et les relations many-to-many nécessaires au modèle (recettes ↔ tags, recettes ↔ favoris).
-
-### Authentification OAuth2
-- Implémentation légère du flow "Authorization Code" : le frontend redirige vers le fournisseur (Google/GitHub/Microsoft), récupère le `code`, puis le poste à `/api/auth/oauth/<provider>/`. Le serveur échange ce code contre un token d'accès fournisseur, récupère le profil utilisateur, puis crée/retrouve le compte SUPMEAL correspondant et renvoie des tokens JWT SUPMEAL classiques. Cela évite une dépendance lourde type `django-allauth` tout en couvrant les 3 fournisseurs demandés.
 
 ---
 
@@ -174,8 +165,6 @@ erDiagram
         int servings
     }
 ```
-
-**Optimisation des recherches** : la table `Ingredient` centralise les noms d'ingrédients (contrainte d'unicité + index) : les recettes référencent des `Ingredient` via `RecipeIngredient` plutôt que de dupliquer du texte libre. Cela permet un filtrage par ingrédient en `O(index)` plutôt que par scan de texte libre sur chaque recette, et évite la duplication de données (ex : "tomate" écrit différemment dans 50 recettes). Des index sont également posés sur `Recipe.title`, `Recipe.prep_time_minutes`, `Recipe.cook_time_minutes` et `Message(cookbook, created_at)` pour accélérer respectivement la recherche plein texte, le filtrage par temps, et la pagination du chat.
 
 ---
 
@@ -318,9 +307,7 @@ classDiagram
 
 - Mots de passe **jamais stockés en clair** : hashing via `set_password()` (PBKDF2 par défaut Django).
 - Authentification par **JWT signé** (durée de vie courte pour l'access token, rotation du refresh token).
-- Permissions vérifiées côté serveur à chaque action sensible (édition/suppression de recette, invitation, changement de rôle, envoi de message) — jamais côté client uniquement.
 - Aucun secret n'est commité : toutes les clés (Django `SECRET_KEY`, identifiants OAuth2, mots de passe DB) sont fournies via variables d'environnement (`.env`, non versionné).
-- CORS restreint via `CORS_ALLOWED_ORIGINS` (mode `CORS_ALLOW_ALL=True` uniquement en développement).
 
 ---
 
